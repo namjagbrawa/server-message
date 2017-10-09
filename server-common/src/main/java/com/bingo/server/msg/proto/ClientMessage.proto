@@ -1,0 +1,36 @@
+syntax = "proto3";
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+import "Login.proto";
+import "Role.proto";
+import "Match.proto";
+import "Fight.proto";
+import "MoneyExchange.proto";
+import "Settings.proto";
+
+
+message CS {
+    LoginCheckAccountRequest LoginCheckAccountRequest = 1;
+    LoginCreateRoleRequest LoginCreateRoleRequest = 2;
+    LoginGetRoleDataRequest LoginGetRoleDataRequest = 3;
+
+    RoleRenameRequest RoleRenameRequest = 4;
+
+    MatchCreateGameRequest MatchCreateGameRequest = 5;
+    MatchJoinGameRequest MatchJoinGameRequest = 6;
+
+    FightReadyRequest FightReadyRequest = 7;
+    FightExitGameRequest FightExitGameRequest = 8;
+    FightAgreeExitGameRequest FightAgreeExitGameRequest = 9;
+    MoneyExchangeRequest MoneyExchangeRequest = 10;
+    SettingsRequest SettingsRequest = 11;
+    GetRoleDataRequest GetRoleDataRequest = 12;
+    GetSettingsRequest GetSettingsRequest = 13;
+    MatchAIRequest MatchAIRequest = 14;
+    FightCallLandLordRequest FightCallLandLordRequest = 15;
+    FightSendCardRequest FightSendCardRequest = 16;
+    FightMingPaiRequest FightMingPaiRequest = 17;
+    FightRecommandRequest FightRecommandRequest = 18;
+    FightGetlastRoundRequest FightGetlastRoundRequest = 19;
+    MatchRoleRequest MatchRoleRequest = 20;
+} // 19

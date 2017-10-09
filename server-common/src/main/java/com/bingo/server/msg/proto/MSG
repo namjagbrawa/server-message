@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+import "REQ";
+import "RESP";
+import "NOTIFY";
+
+import "ClientMessage.proto";
+import "ServerMessage.proto";
+
+// 每个消息定义一个消息Code
+enum MsgCode {
+
+    // 基础消息,非应用层消息
+    No_Support_Msg = 0; // 不支持的消息, 保留
+    Heart_Beat_Request = 1; // 通讯层心跳请求
+    Heart_Beat_Response = 2; // 通讯层心跳返回
+
+    // 请求消息
+    Weixin_Login_Request = 10013; // 微信登录请求
+    Registry_Request = 10011; // 用户名密码注册, 暂时不使用
+    Login_Request = 10001;  // 用户名密码登录, 暂时不使用
+    Logout_Request = 10003;  // 登出,无消息体
+    Lastest_Version_Request = 10020; // 获取最新版本信息, 无消息体
+    Timestamp_Request = 10022; // 获取最新的服务器时间戳, 无消息体
+    Get_User_Info_Request = 10024; // 获取用户信息, 无消息体
+    Get_Validate_Code_Request = 10026; // 获取手机验证码, 未使用
+    Bind_Phone_Request = 10027; // 绑定手机号, 未使用
+    Get_Broadcast_Request = 10029; // 获取广播大厅广播消息, 无消息体
+    Get_Message_Request = 10031; // 获取用户消息中心消息,无消息体
+    // 游戏消息
+    Ddz_Get_Rule_Request = 51001; // 获取可用规则选项,无消息体
+    Ddz_New_Desk_Request = 50001;
+    Ddz_Check_In_Desk_Request = 50007; // 确认规则,开桌,无消息体
+    Ddz_Confirm_Rule_Request = 50005; // 确认规则,开桌
+    Get_Friends_Request = 50009; // 获取用户好友列表, 无消息体
+    Enter_Desk_Request = 50011; // 进入牌桌
+    Reconnect_Desk_Request = 50013; // 重连牌桌
+    Ddz_Ready_Request = 50015; // 准备
+    Ddz_Call_Lord_Request = 50017; // 叫地主
+    Ddz_Play_Card_Request = 50018; // 出牌
+
+    // 返回消息
+    Success_Response = 10; // 无消息体, 无返回类型成功返回
+    Weixin_Login_Response = 10014; // 微信登录返回
+    Registry_Response = 10012; // 用户名密码注册返回, 暂时不使用
+    Login_Response = 10002; // 用户名密码登录, 暂时不使用
+    Logout_Response = 10004; // 登出返回, 无消息体
+    Lastest_Version_Response = 10021; // 获取最新版本返回消息
+    Timestamp_Response = 10023; // 获取最新服务器时间戳
+    Get_User_Info_Response = 10025; // 获取用户信息返回
+    Bind_Phone_Response = 10028; // 绑定手机号成功返回, 无消息体, 未使用
+    Get_Broadcast_Response = 10030; // 获取大厅广播消息
+    Get_Message_Response = 10032; // 返回消息内容
+    Ddz_Get_Rule_Response = 50033; // 获取斗地主可用规则选项
+    Ddz_Check_In_Desk_Response = 50008; // 确认规则,开桌
+    Ddz_Confirm_Rule_Response = 50006; // 确认规则,开桌返回
+    Get_Friends_Response = 50010; // 获取用户好友列表返回
+    Enter_Desk_Response = 50012; // 进入牌桌返回
+    Reconnect_Desk_Response = 50014; // 重连牌桌返回
+    Ddz_Ready_Response = 50016; // 斗地主准备返回
+
+    // 通知消息
+    On_Connect_Notification = 11; // 客户端连接成功后，通知客户端topic值
+    // 游戏通知
+    Ddz_New_Desk_Notification = 50002;
+    Ddz_Enter_Desk_Notification = 50003;
+    Ddz_Error_Notification = 50004;
+    Ddz_Desk_Status_Notification = 50020; // 通知其他用户牌桌状态
+    Ddz_User_Notification = 50021; // 发牌通知消息
+    // TODO 开桌,发牌,叫地主通知消息分开发送
+    Ddz_Play_Card_Notification = 50019; // 出牌通知消息
+
+    // 错误消息
+    SYSTEM_ERROR = 9999;
+    BUSINESS_ERROR = 9998;
+    NOT_ONLINE_ERROR = 9997;
+    NOT_CONNECT_ERROR = 9996;
+    ACCOUNT_DISABLE_ERROR = 9995;
+    NO_VERSION_ERROR = 9994;
+    USER_NOT_EXIST_ERROR = 9993;
+    WALLET_NOT_EXIST_ERROR = 9992;
+    PHONE_CODE_VALIDATE_ERROR = 9991;
+    // 游戏错误
+    DDZ_SYSTEM_ERROR = 55555;
+    DDZ_BUSINESS_ERROR = 55554;
+
+    // LandLord Message
+    Landlord_CS = 6001;
+    Landlord_SC = 6002;
+}
+
+message Message {
+    MsgCode msgCode = 1;
+    fixed64 sequence = 2; //消息系列号，主要用于Request和Response，Response的值必须和Request相同，使得发送端可以进行事务匹配处理
+    Request request = 4;
+    Response response = 5;
+    Notification notification = 6;
+    CS cs = 7;
+    SC sc = 8;
+}

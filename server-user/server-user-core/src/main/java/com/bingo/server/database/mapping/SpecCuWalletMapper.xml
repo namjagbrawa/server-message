@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingo.server.database.dao.SpecCuWalletMapper">
+    <resultMap id="BaseResultMap" type="com.bingo.server.database.model.CuWallet">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="bean" jdbcType="INTEGER" property="bean" />
+        <result column="diamond" jdbcType="INTEGER" property="diamond" />
+        <result column="coin" jdbcType="DECIMAL" property="coin" />
+        <result column="credit" jdbcType="DECIMAL" property="credit" />
+        <result column="room_card" jdbcType="INTEGER" property="roomCard" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </resultMap>
+    <update id="substractRoomCard" parameterType="java.util.Map">
+    update CU_WALLET
+    set room_card = room_card - #{roomCard,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT} and room_card >= #{roomCard,jdbcType=INTEGER}
+  </update>
+</mapper>

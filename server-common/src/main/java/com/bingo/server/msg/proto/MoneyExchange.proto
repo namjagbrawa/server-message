@@ -1,0 +1,15 @@
+syntax = "proto3";
+package com.bingo.server.msg;
+
+import "Entity.proto";
+
+
+message MoneyExchangeRequest {
+    int32 num = 1;
+    bool add = 2;
+}
+
+message MoneyExchangeResponse {
+    int32 errorCode = 1;
+    RoleData roleData = 2;
+}

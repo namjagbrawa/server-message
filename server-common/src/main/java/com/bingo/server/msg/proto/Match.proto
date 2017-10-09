@@ -1,0 +1,39 @@
+syntax = "proto3";
+package com.bingo.server.msg;
+
+
+import "Entity.proto";
+
+message MatchCreateGameRequest {
+    GameConfig gameConfig = 1;
+}
+
+message MatchAIRequest {
+}
+message MatchRoleRequest {
+}
+message MatchCreateGameResponse {
+    int32 errorCode = 1;
+    string id = 2;
+    bool moguai = 3;
+    GameRoleData gameRoleData = 4;
+    int32 roomType = 6;
+}
+
+
+message MatchJoinGameRequest {
+    string lockString = 1;
+}
+
+message MatchJoinGameResponse {
+    int32 errorCode = 1;
+    repeated GameRoleData gameRoleData = 2;
+    string id = 3;
+    bool moguai = 4;
+    int32 seated = 5;
+    int32 roomType = 6;
+}
+
+message SCMatchJoinGame {
+    GameRoleData gameRoleData = 1;
+}

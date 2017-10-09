@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>server-game</artifactId>
+        <groupId>com.bingo</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>server-game-provider</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- common -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- database model -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-database-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>

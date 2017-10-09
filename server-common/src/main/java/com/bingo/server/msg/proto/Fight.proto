@@ -1,0 +1,161 @@
+syntax = "proto3";
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+
+import "Entity.proto";
+
+message FightReadyRequest {
+}
+
+message FightReadyResponse {
+    int32 errorCode = 1;
+}
+
+message SCFightReady {
+    int32 seated = 1;
+}
+
+message SCFightMingPai {
+    int32 seated = 1;
+    repeated int32 pai = 2;
+}
+message FightMingPaiRequest {
+}
+message FightMingPaiResponse {
+    int32 errorCode = 1;
+}
+
+message FightGetlastRoundRequest {
+}
+message FightGetlastRoundResponse {
+    int32 errorCode = 1;
+    repeated Record records = 2;
+}
+message FightRejoinRequest {
+}
+message FightRejoinResponse {
+    repeated int32 pai = 1;
+    repeated int32 landLordPai = 2;
+    string roomId = 3;
+    bool moguai = 4;
+    int32 seated = 5;
+    message gameRolePlayData {
+        GameRoleData gameRoleData = 1;
+        int32 allScore = 2;
+        int32 paiNum = 3;
+    }
+}
+message FightRecommandRequest {
+}
+message FightRecommandResponse {
+    int32 errorCode = 1;
+    message RecommandPai {
+        repeated int32 pai = 1;
+    }
+    repeated RecommandPai recommandPai = 2;
+}
+message SCFightStart {
+    repeated int32 pai = 1;
+    int32 times = 2;
+    repeated PaiNum PaiNum = 4;
+
+}
+message SCFightRoundOver {
+    int32 di = 1;
+    int32 bomb = 2;
+    bool spring = 3;
+    bool moguai = 4;
+    bool mingpai = 5;
+    message Score {
+        string name = 1;
+        int32 score = 2;
+        int32 allScore = 3;
+        int32 seated = 4;
+        int32 money = 5;
+    }
+    repeated Score score = 6;
+    bool over = 7;
+}
+message SCFightGameOver {
+    message GameOverData {
+        string name = 1;
+        int32 landLordNum = 2;
+        int32 farmerNum = 3;
+        int32 score = 4;
+    }
+    repeated GameOverData gameOverData = 1;
+}
+message FightCallLandLordRequest {
+    int32 fen = 1;
+}
+message FightCallLandLordResponse {
+    int32 errorCode = 1;
+}
+message SCFightCallLandLord {
+    int32 seated = 1;
+    int32 countdown = 2;
+    int32 currentFen = 3;
+    int32 fen = 4;
+
+}
+message SCFightPutOut {
+    int32 seated = 1;
+    int32 countdown = 2;
+    bool allowGuo = 3;
+}
+message SCFightPutOutPai {
+    int32 seated = 1;
+    repeated int32 putOutPai = 2;
+    int32 times = 3;
+    repeated PaiNum PaiNum = 4;
+}
+message FightSendCardRequest {
+    repeated int32 pai = 1;
+}
+message FightSendCardResponse {
+    int32 errorCode = 1;
+}
+message SCFightLandLord {
+    repeated int32 pai = 1;
+    repeated int32 landLordPai = 2;
+    int32 seated = 3;
+}
+
+
+message FightExitGameRequest {
+
+}
+
+message FightExitGameResponse {
+    int32 errorCode = 1;
+}
+
+
+message SCFightExitGame {
+    string gameRoleId = 1;
+}
+
+message SCFightApplyExitGame {
+    string name = 1;
+    int32 countDown = 2;
+}
+
+message FightAgreeExitGameRequest {
+    bool agree = 1;
+}
+
+message FightAgreeExitGameResponse {
+    int32 errorCode = 1;
+}
+message SCAgreeExitGame {
+    string name = 1;
+}
+
+message SCFightGameDismiss {
+
+}
+
+message SCFightLoadResource {
+
+}

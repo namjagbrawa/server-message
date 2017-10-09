@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+// 整合消息
+message Request {
+    fixed64 topic = 1;
+    fixed64 userId = 2;
+    LoginRequest login = 3;
+    RegistryRequest registry = 4;
+    WeixinLoginRequest weixinLogin = 6;
+    DdzConfirmRuleRequest ddzConfirmRule = 8;
+    EnterDeskRequest enterDesk = 9; // 进入牌桌
+    ReconnectDeskRequest reconnectDesk = 10; // 重连牌桌
+    DdzReadyRequest ddzReady = 11; // 准备
+    DdzCallLordRequest ddzCallLord = 12; // 叫地主
+    DdzPlayCardRequest ddzPlayCard = 13; // 出牌请求
+
+}
+
+// 用户密码注册
+message RegistryRequest {
+    string username = 1;
+    string password = 2;
+}
+
+// 用户密码登录
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+// 微信登录
+message WeixinLoginRequest {
+    string code = 1;
+}
+
+message DdzConfirmRuleRequest {
+    string deskName = 1;
+    string rule = 2;
+}
+
+message EnterDeskRequest {
+    string deskNo = 1;
+}
+
+message ReconnectDeskRequest {
+    fixed64 deskId = 1;
+}
+
+message DdzReadyRequest {
+    fixed64 deskId = 1;
+}
+
+message DdzCallLordRequest {
+    int32 mark = 1;
+}
+
+message DdzPlayCardRequest {
+    bytes cards = 1;
+}

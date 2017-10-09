@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="${application.name}"/>
+
+    <dubbo:registry address="zookeeper://${zookeeper.address}" file="${registry.file}"/>
+
+    <dubbo:annotation package="com.bingo"/>
+
+    <!-- provider -->
+    <!-- provider -->
+    <!-- provider -->
+
+    <dubbo:protocol name="dubbo" port="${stat.port}"/>
+    <dubbo:service interface="com.bingo.server.business.StatMsg" ref="statMsgProcess"/>
+
+    <!-- consumer -->
+    <!-- consumer -->
+    <!-- consumer -->
+
+    <dubbo:reference interface="com.bingo.server.database.provider.StatProvider" id="statProvider" timeout="5000" check="false"/>
+
+
+</beans>

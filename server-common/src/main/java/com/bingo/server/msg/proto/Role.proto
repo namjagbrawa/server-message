@@ -1,0 +1,20 @@
+syntax = "proto3";
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+import "Entity.proto";
+
+message RoleRenameRequest {
+    string name = 1;
+}
+
+message RoleRenameResponse {
+    int32 errorCode = 1;
+}
+message GetRoleDataRequest {
+}
+
+message GetRoleDataResponse {
+    int32 errorCode = 1;
+    RoleData roleData = 2;
+}

@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>server-hall</artifactId>
+        <groupId>com.bingo</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>server-hall-core</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0</version>
+
+    <name>${project.artifactId}</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- common -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- spring redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>1.4.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- spring -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.29</version>
+        </dependency>
+        <!-- user provider -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-user-provider</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- hall provider -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-hall-provider</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- game provider -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-game-provider</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- gate provider -->
+        <dependency>
+            <groupId>com.bingo</groupId>
+            <artifactId>server-gate-provider</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>hall</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <!-- 是否替换资源中的属性-->
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <!-- The configuration of the plugin -->
+                <configuration>
+                    <!-- Specifies the configuration file of the assembly plugin -->
+                    <descriptors>
+                        <descriptor>src/main/resources/package.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <!-- The configuration of the plugin -->
+                <configuration>
+                    <!-- Configuration of the archiver -->
+                    <archive>
+                        <!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文-->
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <!-- Manifest specific configuration -->
+                        <manifest>
+                            <!-- 是否要把第三方jar放到manifest的classpath-->
+                            <addClasspath>true</addClasspath>
+                            <!-- 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- 应用的main class -->
+                            <mainClass>com.bingo.server.hall.HallRunner</mainClass>
+                        </manifest>
+                    </archive>
+                    <!-- 过滤掉不希望包含在jar中的文件 -->
+                    <excludes>
+                        <exclude>${project.basedir}/xml/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <application.name>${project.build.finalName}</application.name>
+                <database.url>jdbc:mysql://192.168.223.24:3306/server</database.url>
+                <database.username>root</database.username>
+                <database.password>123456</database.password>
+                <validationQuery>SELECT 1</validationQuery>
+                <log.level>info</log.level>
+                <log.dirs>/server/logs/hall/</log.dirs>
+                <log.appendName>STDOUT</log.appendName>
+                <zookeeper.address>192.168.223.25:2181</zookeeper.address>
+                <registry.file>D:/registry_cache/${project.build.finalName}</registry.file>
+                <redis.host>192.168.223.25</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.password>123456</redis.password>
+                <hall.port>33000</hall.port>
+                <weixin.app.id>a</weixin.app.id>
+                <weixin.secret>b</weixin.secret>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <application.name>${project.build.finalName}</application.name>
+                <database.url>jdbc:mysql://192.168.221.48:3306/gameserver</database.url>
+                <database.username>root</database.username>
+                <database.password>game</database.password>
+                <validationQuery>SELECT 1</validationQuery>
+                <log.level>info</log.level>
+                <log.dirs>/server/logs/hall/</log.dirs>
+                <log.appendName>FILE</log.appendName>
+                <zookeeper.address>192.168.221.48:2181</zookeeper.address>
+                <registry.file>/tmp/registry_cache/${project.build.finalName}</registry.file>
+                <redis.host>192.168.221.48</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.password>123456</redis.password>
+                <hall.port>33000</hall.port>
+                <weixin.app.id>a</weixin.app.id>
+                <weixin.secret>b</weixin.secret>
+            </properties>
+        </profile>
+    </profiles>
+</project>
+

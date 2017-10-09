@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+import "BASE";
+
+message Response {
+    bool result = 1; //true表示应答成功，false表示应答失败
+    bool lastResponse = 2; // 一个请求可以包含多个应答，用于指示是否为最后一个应答
+    string errorDescribe = 3; // result == false时，用于描述错误信息
+    LoginResponse login = 4;
+    RegistryResponse registry = 5;
+    WeixinLoginResponse weixinLogin = 7;
+    LastestVersionResponse lastestVersion = 8; // 获取最新版本返回消息
+    TimestampResponse timestamp = 9; // 获取最新服务器时间戳
+    GetUserInfoResponse getUserInfo = 10; // 获取用户信息
+    GetBroadcastResponse getBroadcast = 11; // 获取大厅广播消息
+    GetMessageResponse getMessage = 12; // 获取用户消息中心消息
+    DdzGetRuleResponse ddzGetRule = 13; // 获取斗地主可以规则返回消息
+    DdzConfirmRuleResponse ddzConfirmRule = 14; // 斗地主规则确认
+    DdzCheckInDeskResponse ddzCheckInDesk = 15; // 用户是否在牌桌确认
+    GetFriendsResponse getFriends = 16; // 获取用户好友列表及好友游戏状态
+    EnterDeskResponse enterDesk = 17; // 进入牌桌返回
+    ReconnectDeskResponse reconnectDesk = 18; // 重连牌桌返回
+    DdzReadyResponse ddzReady = 19; // 斗地主准备返回
+}
+
+message LoginResponse {
+    fixed64 topic = 1;
+}
+
+message RegistryResponse {
+    fixed64 userId = 1;
+}
+
+message WeixinLoginResponse {
+    fixed64 userId = 1;
+}
+
+message LastestVersionResponse {
+    int32 version = 1;
+    string url = 2; // 资源url
+}
+
+message TimestampResponse {
+    fixed64 timestamp = 1;
+}
+
+message GetUserInfoResponse {
+    fixed64 userId = 1;
+    string nickName = 2;
+    string sex = 3;
+    int32 gameNumber = 4;
+    int32 roomCard = 5;
+    bool bindPhone = 6;
+}
+
+message GetBroadcastResponse {
+    string content = 1;
+}
+
+message GetMessageResponse {
+    repeated SystemMessage system = 1;
+    repeated UserMessage user = 2;
+    repeated ScoreMessage score = 3;
+}
+
+message DdzGetRuleResponse {
+    repeated DdzType ddzType = 1;
+}
+
+message DdzCheckInDeskResponse {
+    bool in = 1;
+    fixed64 deskId = 2;
+}
+
+message DdzConfirmRuleResponse {
+    fixed64 deskId = 1;
+    string name = 2;
+}
+
+message GetFriendsResponse {
+    repeated Friend friends = 1;
+}
+
+message EnterDeskResponse {
+    Desk desk = 1;
+}
+
+message ReconnectDeskResponse {
+    Desk desk = 1;
+    repeated DeskOperation history = 2;
+    DeskOperation current = 3;
+}
+
+message DdzReadyResponse {
+    Desk desk = 1;
+}

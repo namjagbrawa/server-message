@@ -1,0 +1,33 @@
+syntax = "proto3";
+package com.bingo.server.msg;
+
+import "Entity.proto";
+
+message LoginCheckAccountRequest {
+    string account = 1;
+}
+
+message LoginCheckAccountResponse {
+    int32 errorCode = 1;
+}
+
+message LoginCreateRoleRequest {
+    string account = 1;
+    string name = 2;
+}
+
+message LoginCreateRoleResponse {
+    int32 errorCode = 1;
+}
+
+message LoginGetRoleDataRequest {
+    string account = 1;
+}
+
+message LoginGetRoleDataResponse {
+    int32 errorCode = 1;
+    int32 serverTime = 2;
+    RoleData roleData = 3;
+    string game = 4;
+}
+

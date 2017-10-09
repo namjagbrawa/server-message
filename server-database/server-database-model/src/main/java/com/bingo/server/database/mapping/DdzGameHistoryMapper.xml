@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingo.server.database.dao.DdzGameHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.bingo.server.database.model.DdzGameHistory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="desk_id" jdbcType="BIGINT" property="deskId" />
+    <result column="round" jdbcType="INTEGER" property="round" />
+    <result column="site_card_1" jdbcType="VARCHAR" property="siteCard1" />
+    <result column="site_card_2" jdbcType="VARCHAR" property="siteCard2" />
+    <result column="site_card_3" jdbcType="VARCHAR" property="siteCard3" />
+    <result column="pull_card" jdbcType="VARCHAR" property="pullCard" />
+    <result column="pull_site" jdbcType="INTEGER" property="pullSite" />
+    <result column="remain_card" jdbcType="VARCHAR" property="remainCard" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, desk_id, round, site_card_1, site_card_2, site_card_3, pull_card, pull_site, 
+    remain_card, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.bingo.server.database.model.DdzGameHistoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from DDZ_GAME_HISTORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0">
+      limit #{limitStart} , #{limitRows}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DDZ_GAME_HISTORY
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from DDZ_GAME_HISTORY
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bingo.server.database.model.DdzGameHistoryExample">
+    delete from DDZ_GAME_HISTORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bingo.server.database.model.DdzGameHistory">
+    insert into DDZ_GAME_HISTORY (id, desk_id, round, 
+      site_card_1, site_card_2, site_card_3, 
+      pull_card, pull_site, remain_card, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{deskId,jdbcType=BIGINT}, #{round,jdbcType=INTEGER}, 
+      #{siteCard1,jdbcType=VARCHAR}, #{siteCard2,jdbcType=VARCHAR}, #{siteCard3,jdbcType=VARCHAR}, 
+      #{pullCard,jdbcType=VARCHAR}, #{pullSite,jdbcType=INTEGER}, #{remainCard,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bingo.server.database.model.DdzGameHistory">
+    insert into DDZ_GAME_HISTORY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deskId != null">
+        desk_id,
+      </if>
+      <if test="round != null">
+        round,
+      </if>
+      <if test="siteCard1 != null">
+        site_card_1,
+      </if>
+      <if test="siteCard2 != null">
+        site_card_2,
+      </if>
+      <if test="siteCard3 != null">
+        site_card_3,
+      </if>
+      <if test="pullCard != null">
+        pull_card,
+      </if>
+      <if test="pullSite != null">
+        pull_site,
+      </if>
+      <if test="remainCard != null">
+        remain_card,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deskId != null">
+        #{deskId,jdbcType=BIGINT},
+      </if>
+      <if test="round != null">
+        #{round,jdbcType=INTEGER},
+      </if>
+      <if test="siteCard1 != null">
+        #{siteCard1,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCard2 != null">
+        #{siteCard2,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCard3 != null">
+        #{siteCard3,jdbcType=VARCHAR},
+      </if>
+      <if test="pullCard != null">
+        #{pullCard,jdbcType=VARCHAR},
+      </if>
+      <if test="pullSite != null">
+        #{pullSite,jdbcType=INTEGER},
+      </if>
+      <if test="remainCard != null">
+        #{remainCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bingo.server.database.model.DdzGameHistoryExample" resultType="java.lang.Long">
+    select count(*) from DDZ_GAME_HISTORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update DDZ_GAME_HISTORY
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.deskId != null">
+        desk_id = #{record.deskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.round != null">
+        round = #{record.round,jdbcType=INTEGER},
+      </if>
+      <if test="record.siteCard1 != null">
+        site_card_1 = #{record.siteCard1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteCard2 != null">
+        site_card_2 = #{record.siteCard2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteCard3 != null">
+        site_card_3 = #{record.siteCard3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pullCard != null">
+        pull_card = #{record.pullCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pullSite != null">
+        pull_site = #{record.pullSite,jdbcType=INTEGER},
+      </if>
+      <if test="record.remainCard != null">
+        remain_card = #{record.remainCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update DDZ_GAME_HISTORY
+    set id = #{record.id,jdbcType=BIGINT},
+      desk_id = #{record.deskId,jdbcType=BIGINT},
+      round = #{record.round,jdbcType=INTEGER},
+      site_card_1 = #{record.siteCard1,jdbcType=VARCHAR},
+      site_card_2 = #{record.siteCard2,jdbcType=VARCHAR},
+      site_card_3 = #{record.siteCard3,jdbcType=VARCHAR},
+      pull_card = #{record.pullCard,jdbcType=VARCHAR},
+      pull_site = #{record.pullSite,jdbcType=INTEGER},
+      remain_card = #{record.remainCard,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bingo.server.database.model.DdzGameHistory">
+    update DDZ_GAME_HISTORY
+    <set>
+      <if test="deskId != null">
+        desk_id = #{deskId,jdbcType=BIGINT},
+      </if>
+      <if test="round != null">
+        round = #{round,jdbcType=INTEGER},
+      </if>
+      <if test="siteCard1 != null">
+        site_card_1 = #{siteCard1,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCard2 != null">
+        site_card_2 = #{siteCard2,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCard3 != null">
+        site_card_3 = #{siteCard3,jdbcType=VARCHAR},
+      </if>
+      <if test="pullCard != null">
+        pull_card = #{pullCard,jdbcType=VARCHAR},
+      </if>
+      <if test="pullSite != null">
+        pull_site = #{pullSite,jdbcType=INTEGER},
+      </if>
+      <if test="remainCard != null">
+        remain_card = #{remainCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bingo.server.database.model.DdzGameHistory">
+    update DDZ_GAME_HISTORY
+    set desk_id = #{deskId,jdbcType=BIGINT},
+      round = #{round,jdbcType=INTEGER},
+      site_card_1 = #{siteCard1,jdbcType=VARCHAR},
+      site_card_2 = #{siteCard2,jdbcType=VARCHAR},
+      site_card_3 = #{siteCard3,jdbcType=VARCHAR},
+      pull_card = #{pullCard,jdbcType=VARCHAR},
+      pull_site = #{pullSite,jdbcType=INTEGER},
+      remain_card = #{remainCard,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

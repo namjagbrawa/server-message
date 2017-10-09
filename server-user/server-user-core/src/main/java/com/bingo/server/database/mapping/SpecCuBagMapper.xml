@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bingo.server.database.dao.SpecCuBagMapper">
+    <resultMap id="BaseResultMap" type="com.bingo.server.database.model.CuBag">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="cu_user_id" jdbcType="BIGINT" property="cuUserId"/>
+        <result column="item_id" jdbcType="BIGINT" property="itemId"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="detail" jdbcType="VARCHAR" property="detail"/>
+        <result column="tip" jdbcType="VARCHAR" property="tip"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+    <update id="modifyItemCount" parameterType="java.util.Map">
+    update CU_BAG
+    set count = count + #{count,jdbcType=INTEGER}, modify_time = now()
+    where cu_user_id = #{userId,jdbcType=BIGINT} and item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+</mapper>

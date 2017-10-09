@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+// 消息中心基础类
+message SystemMessage {
+    string messageType = 1;
+    string title = 2;
+    string content = 3;
+    bool read = 4;
+    int64 time = 5;
+}
+
+message UserMessage {
+    string messageType = 1;
+    fixed64 from = 2;
+    fixed64 to = 3;
+    string content = 4;
+    int64 time = 5;
+}
+
+message ScoreMessage {
+    string messageType = 1;
+    string title = 2;
+    fixed64 scoreId = 3;
+    repeated ScoreRecordMessage scoreRecord = 4;
+    int64 time = 5;
+}
+
+message ScoreRecordMessage {
+    string nickName = 1;
+    string headerUrl = 2;
+    bool win = 3;
+    int32 score = 4;
+}
+
+// 斗地主规则基础类
+message Option {
+    string name = 1;
+    string text = 2;
+    string tip = 3;
+}
+
+message Subject {
+    string name = 1;
+    string text = 2;
+    string tip = 3;
+    string relation = 4;
+    repeated Option options = 5;
+}
+
+message DdzType {
+    string name = 1;
+    string text = 2;
+    string tip = 3;
+    int32 order = 4;
+    repeated Subject subjects = 5;
+}
+
+// 用户好友基础类
+message Friend {
+    fixed64 userId = 1;
+    string nickName = 2;
+    int32 win = 3;
+    string status = 4;
+    string imgUrl = 5;
+}
+
+// 牌桌用户信息基础类
+message User {
+    fixed64 userId = 1;
+    string nickName = 2;
+    string imgUrl = 3;
+    string status = 4;
+    int32 score = 5;
+    int32 site = 6;
+}
+
+// 牌桌基础信息类
+message Desk {
+    fixed64 deskId = 1;
+    string deskName = 2;
+    string rule = 3;
+    repeated User users = 4;
+    int32 round = 5;
+}
+
+// 牌桌重连历史出牌类
+message DeskOperation {
+    bytes siteCards1 = 1;
+    bytes siteCards2 = 2;
+    bytes siteCards3 = 3;
+    int32 pullSite = 4;
+    bytes pullCards = 5;
+    bytes siteRemain1 = 6;
+    bytes siteRemain2 = 7;
+    bytes siteRemain3 = 8;
+}
+
+// 用户牌信息
+message UserStatus {
+    bytes cards = 1;
+    fixed64 userId = 2;
+    fixed64 deskId = 3;
+    int32 site = 4;
+    repeated int32 remain = 5; // 每个座位剩余牌张数
+    int32 nextSite = 6; // 下一个出牌的座位号
+    string deskStatus = 7; // 牌桌状态
+    bytes nextCallMark = 9; // 可叫地主分数
+    int32 lastCallMark = 10; // 上一个叫地主的分数
+    int32 lastCallChair = 11; // 上一个叫地主的座位号
+}

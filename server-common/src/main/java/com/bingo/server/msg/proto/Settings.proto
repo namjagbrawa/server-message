@@ -1,0 +1,22 @@
+syntax = "proto3";
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+message SettingsRequest{	
+	 int32 volume = 1;
+	 int32 musicVolume = 2;
+}
+
+message SettingsResponse{
+	 int32 errorCode = 1;
+}
+
+message GetSettingsRequest{	
+
+}
+
+message GetSettingsResponse{
+	 int32 errorCode = 1 ;
+	 int32 volume = 2;
+	 int32 musicVolume = 3;
+}

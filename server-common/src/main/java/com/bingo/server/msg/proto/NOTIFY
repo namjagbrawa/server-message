@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+// 定义protobuf的包名称空间
+package com.bingo.server.msg;
+
+import "BASE";
+
+message Notification {
+    OnConnectNotification onConnect = 5;
+    DdzDeskStatusNotification ddzzDeskStatus = 9;
+    DdzUserNotification ddzDeal = 10; // 发牌通知消息
+    DdzPlayCardNotification ddzPlayCard = 11; // 出牌通知
+}
+
+message OnConnectNotification{
+    fixed64 topic = 1;
+}
+
+message DdzDeskStatusNotification {
+    Desk desk = 1;
+}
+
+message DdzUserNotification {
+    UserStatus userStatus = 1;
+}
+
+message DdzPlayCardNotification{
+    fixed64 userId = 1;
+    int32 chair = 2;
+    bytes cards = 3;
+    int32 remain = 4;
+    string action = 5; // 动作类型
+}
